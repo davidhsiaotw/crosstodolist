@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">Todo List (Pair Programming)</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="task_list_fragment_label">Todo List</string>
+
+    <string name="subtitle_tasks">Tasks</string>
+    <string name="title_new_task">New Task</string>
+    <string name="title_todo_list">Todo List</string>
+    <string name="title_complete_tasks">Complete Tasks</string>
 
     <string name="hint_task_name">Task Name</string>
     <string name="hint_task_note">Note</string>
     <string name="hint_task_date">MM/DD/YYYY</string>
     <string name="hint_task_location">Location</string>
     <string name="button_save">Save</string>
+
 </resources>

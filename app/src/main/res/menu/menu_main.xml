@@ -3,8 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.todolistpairprogramming.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/item_main"
+        android:title="@string/subtitle_tasks"
+        app:subheaderTextAppearance="?attr/textAppearanceTitleSmall">
+        <menu>
+            <item
+                android:id="@+id/item_add_task"
+                android:checkable="true"
+                android:icon="@drawable/baseline_add_task_24"
+                android:title="@string/title_new_task" />
+            <item
+                android:id="@+id/item_incomplete_tasks"
+                android:checkable="true"
+                android:icon="@drawable/baseline_done_24"
+                android:title="@string/title_todo_list" />
+            <item
+                android:id="@+id/item_complete_tasks"
+                android:checkable="true"
+                android:icon="@drawable/baseline_task_24"
+                android:title="@string/title_complete_tasks" />
+        </menu>
+    </item>
 </menu>
