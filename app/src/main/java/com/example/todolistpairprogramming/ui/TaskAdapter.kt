@@ -1,10 +1,11 @@
-package com.example.todolistpairprogramming
+package com.example.todolistpairprogramming.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.todolistpairprogramming.R
 import com.example.todolistpairprogramming.model.Task
 
 class TaskAdapter(private val tasks: List<Task>, private val onClickListener: () -> Unit) :

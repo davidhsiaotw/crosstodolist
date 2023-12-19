@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/IncompleteTasksFragment"
-        android:name="com.example.todolistpairprogramming.TaskListFragment"
+        android:name="com.example.todolistpairprogramming.ui.incomplete.TaskListFragment"
         tools:layout="@layout/fragment_task_list">
 
         <action
@@ -16,11 +16,11 @@
     </fragment>
     <fragment
         android:id="@+id/EditTaskFragment"
-        android:name="com.example.todolistpairprogramming.TaskFragment"
+        android:name="com.example.todolistpairprogramming.ui.edit.TaskFragment"
         tools:layout="@layout/fragment_task" />
     <fragment
         android:id="@+id/CompleteTasksFragment"
-        android:name="com.example.todolistpairprogramming.CompleteTaskListFragment"
+        android:name="com.example.todolistpairprogramming.ui.complete.CompleteTaskListFragment"
         tools:layout="@layout/fragment_task_list">
         <action
             android:id="@+id/action_CompleteTasksFragment_to_EditTaskFragment"

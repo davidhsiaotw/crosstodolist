@@ -1,9 +1,10 @@
-package com.example.todolistpairprogramming
+package com.example.todolistpairprogramming.ui
 
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.todolistpairprogramming.R
 import com.example.todolistpairprogramming.model.Task
 
 class TaskViewHolder(view: View, private val onClickListener: () -> Unit) : ViewHolder(view) {
@@ -21,6 +22,10 @@ class TaskViewHolder(view: View, private val onClickListener: () -> Unit) : View
 
     fun bind(task: Task) {
         this.task = task
-        // TODO: Not Implemented
+        checkBox.isChecked = task.isComplete
+        name.text = task.name
+        note.text = task.note
+        date.text = task.date
+        location.text = task.date
     }
 }

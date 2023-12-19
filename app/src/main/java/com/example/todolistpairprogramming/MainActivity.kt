@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
@@ -11,9 +12,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.todolistpairprogramming.databinding.ActivityMainBinding
+import com.example.todolistpairprogramming.viewmodel.TaskViewModel
 
 class MainActivity : AppCompatActivity() {
-
+    private val viewModel: TaskViewModel by viewModels { TaskViewModel.Factory }
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
@@ -33,7 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         // https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationDrawer.md
         binding.navigationDrawer.setNavigationItemSelectedListener {
-            it.isChecked = true
             binding.layoutDrawer.close()
             when (it.itemId) {
                 R.id.item_add_task -> {
@@ -51,7 +52,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-
             true
         }
 
@@ -59,12 +59,13 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
         navController = navHostFragment.navController
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.EditTaskFragment -> binding.navigationDrawer.setCheckedItem(R.id.item_add_task)
                 R.id.IncompleteTasksFragment -> binding.navigationDrawer.setCheckedItem(R.id.item_incomplete_tasks)
                 R.id.CompleteTasksFragment -> binding.navigationDrawer.setCheckedItem(R.id.item_complete_tasks)
             }
+            println("number is ${viewModel.number.value}")
         }
     }
 
