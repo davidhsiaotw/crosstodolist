@@ -14,8 +14,7 @@ class TaskListFragment : Fragment() {
 
     private var _binding: FragmentTaskListBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -29,6 +28,11 @@ class TaskListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.title = "Todo List"
     }
 
     override fun onDestroyView() {
