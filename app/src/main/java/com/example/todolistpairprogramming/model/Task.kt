@@ -8,8 +8,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity
 data class Task(
-    @PrimaryKey val id: Long,
-    val name: String,
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    val name: String = "New task",
     val note: String = "",
     val date: String,
     val location: String = "",
