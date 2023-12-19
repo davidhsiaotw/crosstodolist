@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_IncompleteTasksFragment_to_EditTaskFragment"
             app:destination="@id/EditTaskFragment" />
-        <action
-            android:id="@+id/action_IncompleteTasksFragment_to_CompleteTasksFragment"
-            app:destination="@id/CompleteTasksFragment" />
     </fragment>
     <fragment
         android:id="@+id/EditTaskFragment"

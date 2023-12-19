@@ -10,7 +10,6 @@ import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.todolistpairprogramming.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -31,24 +30,25 @@ class MainActivity : AppCompatActivity() {
             binding.layoutDrawer.open()
         }
 
+
         // https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationDrawer.md
         binding.navigationDrawer.setNavigationItemSelectedListener {
             it.isChecked = true
             binding.layoutDrawer.close()
             when (it.itemId) {
                 R.id.item_add_task -> {
-                    // TODO: navigate to TaskFragment
-                    Log.d("Navigation Drawer", "TaskFragment is displaying")
+                    if (navController.currentDestination?.id != R.id.EditTaskFragment)
+                        navController.navigate(R.id.EditTaskFragment)
                 }
 
                 R.id.item_incomplete_tasks -> {
-                    // TODO: navigate to TaskListFragment
-                    Log.d("Navigation Drawer", "TaskListFragment is displaying")
+                    navController.popBackStack(R.id.IncompleteTasksFragment, false)
                 }
 
                 R.id.item_complete_tasks -> {
-                    // TODO: navigate to CompleteTaskListFragment
-                    Log.d("Navigation Drawer", "CompleteTaskListFragment is displaying")
+                    if (!navController.popBackStack(R.id.EditTaskFragment, true)) {
+                        navController.navigate(R.id.CompleteTasksFragment)
+                    }
                 }
             }
 
@@ -58,6 +58,14 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
         navController = navHostFragment.navController
+
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when (destination.id) {
+                R.id.EditTaskFragment -> binding.navigationDrawer.setCheckedItem(R.id.item_add_task)
+                R.id.IncompleteTasksFragment -> binding.navigationDrawer.setCheckedItem(R.id.item_incomplete_tasks)
+                R.id.CompleteTasksFragment -> binding.navigationDrawer.setCheckedItem(R.id.item_complete_tasks)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -72,10 +80,8 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.item_add_task -> {
-                // TODO: navigate to TaskFragment
-                // NOTE: current fragment could be TaskListFragment or InCompleteTaskListFragment
-                // TaskFragment should always be on the top of the back stack
-                // https://developer.android.com/guide/navigation/backstack
+                if (navController.currentDestination?.id != R.id.EditTaskFragment)
+                    navController.navigate(R.id.EditTaskFragment)
                 true
             }
 
