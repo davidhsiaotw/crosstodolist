@@ -13,19 +13,14 @@
         <action
             android:id="@+id/action_IncompleteTasksFragment_to_EditTaskFragment"
             app:destination="@id/EditTaskFragment" />
+        <action
+            android:id="@+id/action_IncompleteTasksFragment_to_CompleteTasksFragment"
+            app:destination="@id/CompleteTasksFragment" />
     </fragment>
     <fragment
         android:id="@+id/EditTaskFragment"
         android:name="com.example.todolistpairprogramming.TaskFragment"
-        tools:layout="@layout/fragment_task">
-
-        <action
-            android:id="@+id/action_EditTaskFragment_to_IncompleteTasksFragment"
-            app:destination="@id/IncompleteTasksFragment" />
-        <action
-            android:id="@+id/action_EditTaskFragment_to_CompleteTasksFragment"
-            app:destination="@id/CompleteTasksFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_task" />
     <fragment
         android:id="@+id/CompleteTasksFragment"
         android:name="com.example.todolistpairprogramming.CompleteTaskListFragment"
