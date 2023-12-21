@@ -1,5 +1,6 @@
 package com.example.todolistpairprogramming.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -9,14 +10,14 @@ import com.example.todolistpairprogramming.model.Task
 @Dao
 interface TaskDao {
     @Query("SELECT * FROM task WHERE isComplete = 0")
-    fun getInCompleteTasks(): List<Task>
+    fun getInCompleteTasks(): LiveData<List<Task>>
 
     @Query("SELECT * FROM task WHERE isComplete = 1")
-    fun getCompleteTasks(): List<Task>
+    fun getCompleteTasks(): LiveData<List<Task>>
 
     @Insert
-    fun addTask(task: Task)
+    suspend fun addTask(task: Task)
 
     @Update
-    fun updateTask(task: Task)
+    suspend fun updateTask(task: Task)
 }
