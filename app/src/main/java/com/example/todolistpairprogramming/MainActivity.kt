@@ -1,21 +1,23 @@
 package com.example.todolistpairprogramming
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.todolistpairprogramming.databinding.ActivityMainBinding
+import com.example.todolistpairprogramming.ui.Status
 import com.example.todolistpairprogramming.viewmodel.TaskViewModel
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: TaskViewModel by viewModels { TaskViewModel.Factory }
+    private var status: Status = Status.INCOMPLETE  // an UI state of TaskListFragment
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
@@ -43,13 +45,29 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.item_incomplete_tasks -> {
-                    navController.popBackStack(R.id.IncompleteTasksFragment, false)
+                    if (status == Status.INCOMPLETE) {
+                        navController.popBackStack(R.id.TaskListFragment, false)
+                    } else if (status == Status.COMPLETE) {
+                        navController.popBackStack(R.id.TaskListFragment, true)
+                        navController.navigate(
+                            R.id.TaskListFragment,
+                            bundleOf("isComplete" to Status.INCOMPLETE)
+                        )
+                    }
+                    status = Status.INCOMPLETE
                 }
 
                 R.id.item_complete_tasks -> {
-                    if (!navController.popBackStack(R.id.EditTaskFragment, true)) {
-                        navController.navigate(R.id.CompleteTasksFragment)
+                    if (status == Status.COMPLETE) {
+                        navController.popBackStack(R.id.TaskListFragment, false)
+                    } else if (status == Status.INCOMPLETE) {
+                        navController.popBackStack(R.id.TaskListFragment, true)
+                        navController.navigate(
+                            R.id.TaskListFragment,
+                            bundleOf("isComplete" to Status.COMPLETE)
+                        )
                     }
+                    status = Status.COMPLETE
                 }
             }
             true
@@ -62,10 +80,11 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.EditTaskFragment -> binding.navigationDrawer.setCheckedItem(R.id.item_add_task)
-                R.id.IncompleteTasksFragment -> binding.navigationDrawer.setCheckedItem(R.id.item_incomplete_tasks)
-                R.id.CompleteTasksFragment -> binding.navigationDrawer.setCheckedItem(R.id.item_complete_tasks)
+                R.id.TaskListFragment -> {
+                    // TODO: check current status
+                    binding.navigationDrawer.setCheckedItem(R.id.item_incomplete_tasks)
+                }
             }
-            println("number is ${viewModel.number.value}")
         }
     }
 

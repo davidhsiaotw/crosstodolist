@@ -3,27 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/IncompleteTasksFragment">
+    app:startDestination="@id/TaskListFragment">
 
     <fragment
-        android:id="@+id/IncompleteTasksFragment"
-        android:name="com.example.todolistpairprogramming.ui.incomplete.TaskListFragment"
+        android:id="@+id/TaskListFragment"
+        android:name="com.example.todolistpairprogramming.ui.tasklist.TaskListFragment"
         tools:layout="@layout/fragment_task_list">
-
-        <action
-            android:id="@+id/action_IncompleteTasksFragment_to_EditTaskFragment"
-            app:destination="@id/EditTaskFragment" />
+        <argument
+            android:name="isComplete"
+            android:defaultValue="INCOMPLETE"
+            app:argType="com.example.todolistpairprogramming.ui.Status" />
     </fragment>
     <fragment
         android:id="@+id/EditTaskFragment"
         android:name="com.example.todolistpairprogramming.ui.edit.TaskFragment"
-        tools:layout="@layout/fragment_task" />
-    <fragment
-        android:id="@+id/CompleteTasksFragment"
-        android:name="com.example.todolistpairprogramming.ui.complete.CompleteTaskListFragment"
-        tools:layout="@layout/fragment_task_list">
-        <action
-            android:id="@+id/action_CompleteTasksFragment_to_EditTaskFragment"
-            app:destination="@+id/EditTaskFragment" />
+        tools:layout="@layout/fragment_task">
+        <argument
+            android:name="task"
+            android:defaultValue="@null"
+            app:argType="com.example.todolistpairprogramming.model.Task"
+            app:nullable="true" />
     </fragment>
 </navigation>

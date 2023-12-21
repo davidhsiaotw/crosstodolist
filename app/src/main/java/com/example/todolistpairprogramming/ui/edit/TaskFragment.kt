@@ -1,13 +1,14 @@
 package com.example.todolistpairprogramming.ui.edit
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.todolistpairprogramming.databinding.FragmentTaskBinding
 import com.example.todolistpairprogramming.model.Task
 import com.example.todolistpairprogramming.viewmodel.TaskViewModel
@@ -32,7 +33,8 @@ class TaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bind(Task(id = -1, date = "12/31/2023"))
+        val safeArgs: TaskFragmentArgs by navArgs()
+        bind(safeArgs.task)
     }
 
     override fun onDestroyView() {
@@ -40,15 +42,32 @@ class TaskFragment : Fragment() {
         _binding = null
     }
 
-    private fun bind(task: Task) {
+    private fun bind(task: Task?) {
         _binding?.let {
-            it.buttonSaveTask.setOnClickListener {
-                // TODO: update task if a task is selected (TaskViewModel), otherwise add a new task
-                taskViewModel.test()
+            it.buttonSaveTask.setOnClickListener { _ ->
+                if (task == null) {
+                    taskViewModel.addTask(
+                        Task(
+                            name = it.textInputTaskName.editText?.text.toString(),
+                            note = it.textInputTaskNote.editText?.text.toString(),
+                            date = it.textInputTaskDate.editText?.text.toString(),
+                            location = it.textInputTaskLocation.editText?.text.toString(),
+                        )
+                    )
+                } else {
+                    taskViewModel.updateTask(task)
+                }
                 findNavController().popBackStack()
             }
-            it.buttonCancelTask.setOnClickListener {
-                findNavController().popBackStack()
+            it.buttonCancelTask.setOnClickListener { findNavController().popBackStack() }
+
+            if (task != null) {
+                it.textInputTaskName.editText?.setText(task.name, TextView.BufferType.EDITABLE)
+                it.textInputTaskNote.editText?.setText(task.note, TextView.BufferType.EDITABLE)
+                it.textInputTaskDate.editText?.setText(task.date, TextView.BufferType.EDITABLE)
+                it.textInputTaskLocation.editText?.setText(
+                    task.location, TextView.BufferType.EDITABLE
+                )
             }
         }
     }

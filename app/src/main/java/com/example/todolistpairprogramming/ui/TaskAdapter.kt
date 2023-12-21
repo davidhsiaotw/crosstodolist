@@ -8,12 +8,15 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.todolistpairprogramming.R
 import com.example.todolistpairprogramming.model.Task
 
-class TaskAdapter(private val tasks: List<Task>, private val onClickListener: () -> Unit) :
+class TaskAdapter(
+    private val tasks: List<Task>, private val onClickListener: (Task) -> Unit,
+    private val onClickCheckboxListener: (Task) -> Unit
+) :
     ListAdapter<Task, ViewHolder>(TASK_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return TaskViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false),
-            onClickListener
+            onClickListener, onClickCheckboxListener
         )
     }
 
